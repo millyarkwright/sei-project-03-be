@@ -1,5 +1,6 @@
 import express from 'express'
-import cors from 'cors'
+import router from './router.js'
+// import cors from 'cors'
 import logger from './middleware/logger.js'
 import errorHandler from './middleware/errorHandler.js'
 
@@ -9,20 +10,15 @@ const PORT = 4000
 const app = express()
 
 // ! Allow requests from anywhere
-app.use(cors())
+// app.use(cors())
 
 // ! Convert request into valid JSON object
 app.use(express.json())
 
 // ! Middleware
 app.use(logger)
-
+app.use(router)
 app.use(errorHandler)
-
-
-app.get('/', (req, res) => {
-  return res.status(200).send('Api is running')
-})
 
 
 // ! Catching anything that falls through to this point
