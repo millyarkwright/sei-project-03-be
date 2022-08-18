@@ -3,6 +3,8 @@ import router from './router.js'
 // import cors from 'cors'
 import logger from './middleware/logger.js'
 import errorHandler from './middleware/errorHandler.js'
+import MovieModel from './models/movies.js'
+import connectToDb from './utils/db.js'
 
 const PORT = 4000
 
@@ -20,7 +22,6 @@ app.use(logger)
 app.use(router)
 app.use(errorHandler)
 
-
 // ! Catching anything that falls through to this point
 app.use((req, res) => {
   return res.status(404).send('Required endpoint not found')
@@ -28,7 +29,10 @@ app.use((req, res) => {
 
 // ! Start Server
 
-const startServer = () => {
+const startServer = async () => {
+
+  await connectToDb()
+  console.log('Database has connected successfully')
 
   app.listen(PORT, () => {
     console.log('Express server running on port 4000')

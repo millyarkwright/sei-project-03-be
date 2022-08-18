@@ -8,7 +8,7 @@ const errorHandler = (error, req, res, next) => {
     return res.status(401).json({ message: 'Invalid JsonWebToken' })
   }
 
-  return res.status(500).send('Send went wrong')
+  return res.status(500).send('Something went wrong')
 }
 
 export default errorHandler 
