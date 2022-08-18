@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const movieSchema = new mongoose.Schema({
   actors: { type: Array, required: true },
   desc: { type: String, required: true },
-  directors: { type: String, required: true },
+  directors: { type: Array, required: true },
   genre: { type: Array, required: true },
   image_url: { type: String, required: true },
   thumb_url: { type: String, required: true },

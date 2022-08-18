@@ -1,4 +1,4 @@
-import CONSTS from '../consts'
+import CONSTS from '../consts.js'
 import bcrypt  from 'bcrypt'
 
 const hashPassword = async (password) => {
@@ -14,24 +14,28 @@ const users = {
     username: 'admin', 
     password: await hashPassword(CONSTS.ADMIN_PASSWORD),
     role: 'admin',
+    _id: 'c521dfd0009cc8a8b1e9f2c7',
   },
   user1: {
     email: 'user1@email.com',
     username: 'user1',
     password: await hashPassword(CONSTS.USER1_PASSWORD),
     role: 'user',
+    _id: 'c521dfd0009cc8a8b1e9f2c8',
   },
   user2: {
     email: 'user2@email.com',
     username: 'user2',
     password: await hashPassword(CONSTS.USER2_PASSWORD),
     role: 'user',
+    _id: 'c521dfd0009cc8a8b1e9f2c9',
   },
   user3: {
     email: 'user3@email.com',
     username: 'user3',
     password: await hashPassword(CONSTS.USER3_PASSWORD),
     role: 'user',
+    _id: 'c521dfd0009cc8a8b1e9f2c1',
   },
 }
 const movies = [
@@ -5441,6 +5445,9 @@ const movies = [
     'rating': 9.0,
     'year': 1957,
   }
-]
+].map((movie) => ({
+  ...movie,
+  createdBy: users.admin._id,
+}))
 
 export default { movies, users }
