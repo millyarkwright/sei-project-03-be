@@ -1,25 +1,38 @@
+import CONSTS from '../consts'
+import bcrypt  from 'bcrypt'
+
+const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+  return hashedPassword
+}
+  
 
 const users = {
   admin: {
     email: 'admin@email.com', 
     username: 'admin', 
+    password: await hashPassword(CONSTS.ADMIN_PASSWORD),
     role: 'admin',
   },
   user1: {
     email: 'user1@email.com',
     username: 'user1',
+    password: await hashPassword(CONSTS.USER1_PASSWORD),
     role: 'user',
   },
   user2: {
     email: 'user2@email.com',
     username: 'user2',
+    password: await hashPassword(CONSTS.USER2_PASSWORD),
     role: 'user',
   },
   user3: {
     email: 'user3@email.com',
     username: 'user3',
+    password: await hashPassword(CONSTS.USER3_PASSWORD),
     role: 'user',
-  }
+  },
 }
 const movies = [
   {
@@ -5430,4 +5443,4 @@ const movies = [
   }
 ]
 
-export default { movies }
+export default { movies, users }
