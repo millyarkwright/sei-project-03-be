@@ -1,19 +1,24 @@
 import express from 'express'
 import cors from 'cors'
 import logger from './middleware/logger.js'
+import errorHandler from './middleware/errorHandler.js'
 
 const PORT = 4000
 
-// ? Define Express App
+// ! Define Express App
 const app = express()
 
-// ? Allow requests from anywhere
+// ! Allow requests from anywhere
 app.use(cors())
 
-// ? Convert request into valid JSON object
+// ! Convert request into valid JSON object
 app.use(express.json())
 
+// ! Middleware
 app.use(logger)
+
+app.use(errorHandler)
+
 
 app.get('/', (req, res) => {
   return res.status(200).send('Api is running')
