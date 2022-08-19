@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import CONSTS from '../consts.js'
 import UserModel from '../models/users.js'
+
 
 
 // ! Get all users 
@@ -50,37 +53,63 @@ const register = async (req, res, next) => {
     return res.status(400).json({ message: 'Username already exists' })
   }
 
-  console.log('password->',  newUser.password)
-  console.log('confirmedPassword->',  newUser.confirmedPassword)
-  console.log('password = confpass->', newUser.password === newUser.confirmedPassword)
-  console.log('password does not equal confpass->', newUser.password !== newUser.confirmedPassword)
-
-  if (newUser.password === newUser.confimedPassword) {
-    console.log('passing 2nd if statement - passwords match')
-    return res.status(400).json({ message: 'Passwords match' })
+  // ? Check passwords match
+  if (newUser.password !== newUser.confirmedPassword) {
+    console.log('passing 1st if statement - passwords do not match')
+    return res.status(400).json({ message: 'Password do not match' })
   } 
 
-  // // ? Check passwords match
-  // if (newUser.password !== newUser.confimedPassword) {
-  //   console.log('passing 1st if statement - passwrods donot match')
-  //   return res.status(400).json({ message: 'Password do not match' })
-  // } 
+  // ? Encrypt Password
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(newUser.password, salt)
 
-
-  // // ? Encrypt Password
-  // const salt = await bcrypt.genSalt(10)
-  // const hashedPassword = await bcrypt.hash(newUser.password, salt)
-
-  // // ? Spread in newUser object and replace password with encrypted pw
-  // const createdUser = await UserModel.create({
-  //   ...newUser,
-  //   password: hashedPassword,
-  // })
+  // ? Spread in newUser object and replace password with encrypted pw
+  const createdUser = await UserModel.create({
+    ...newUser,
+    password: hashedPassword,
+  })
 
   // ? Add user to db
-  await UserModel.create(newUser)
+  await UserModel.create(createdUser)
 
   return res.status(200).json({ message: `User: ${newUser.username} has been successfully created!` })
 }
 
-export default ({ getAll, getSingle, register })
+const login = async (req, res, next) => {
+  const { username, password } = req.body
+
+  try {
+    // ? Find user in db
+    const user = UserModel.findOne({ username })
+
+    // ? If user doesn't exist
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' })
+    }
+
+    // ? Check passwords match
+    const passwordsMatch = await bcrypt.compare(password, user.password)
+    
+    // ? If passwords don't match
+    if (!passwordsMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' })
+    }
+
+    // ? If all checks above are passed, generate token
+
+    const payLoad = {
+      username: user.username,
+      email: user.email,
+    }
+
+    const opts = {
+      expiresIn: '7 days',
+    }
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+export default ({ getAll, getSingle, register, login })
