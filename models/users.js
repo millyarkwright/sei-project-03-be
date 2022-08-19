@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 
 const moviePreferenceSchema = new mongoose.Schema({
-  moviesLiked: { type: Array, default: ['likes:'], required: true },
-  moviesDisliked: { type: Array, default: ['dislikes:'], required: true },
+  moviesLiked: { type: Array, default: ['Liked'], required: true },
+  moviesDisliked: { type: Array, default: ['Disliked'], required: true },
   // moviesToShow: { type: mongoose.Schema.ObjectId, ref: 'Movie', required: true },
 })
 

@@ -54,7 +54,7 @@ const register = async (req, res, next) => {
   }
 
   // ? Check passwords match
-  if (newUser.password !== newUser.confirmedPassword) {
+  if (newUser.password !== newUser.confirmPassword) {
     return res.status(400).json({ message: 'Password do not match' })
   } 
 

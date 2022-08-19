@@ -25,7 +25,7 @@ router.route('/profile/:userId')
 // router.route('/profile/:userId').put(userController.updatedUserInfo)
 
 // ! Movie Preference Endpoints
-router.route('/movies/:userId/:movieId').put(moviePreferenceController.createPreference)
+router.route('/movies/:userId/:movieId').put(moviePreferenceController.updatePreferences)
 
 
 

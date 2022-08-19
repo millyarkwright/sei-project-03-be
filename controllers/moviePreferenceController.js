@@ -3,26 +3,29 @@ import UserModel from '../models/users.js'
 
 // ! Create Preferences
 
-const createPreference = async (req, res, next) => {
+const updatePreferences = async (req, res, next) => {
   const { userId, movieId } = req.params
-  const { body: preferences } = req
+  const newPreference = req.body
 
   console.log('user->', userId)
   console.log('movieId->', movieId)
-  console.log('preferences->', preferences)
+  console.log('preferences->', newPreference)
 
   try {
     const movie = await MovieModel.findById(movieId)
     const user = await UserModel.findById(userId)
+    const { moviePreference } = user
+    const { moviesLiked, moviesDisliked } = user.moviePreferences[0]
 
-   
-    user.moviePreferences.push(movieId)
+    
+    console.log('current movies liked', moviesLiked)
 
-    console.log('user updated->', user)
+    moviesLiked.push(movieId)
+
 
     await user.save()
 
-    return res.status(200).json({ message: 'Preference successfully created', moviePreferences: preferences })
+    return res.status(200).json({ message: 'Preference successfully created', moviePreferences: newPreference })
 
   } catch (error) {
     next(error)
@@ -33,5 +36,5 @@ const createPreference = async (req, res, next) => {
 
 
 export default {
-  createPreference,
+  updatePreferences,
 }
