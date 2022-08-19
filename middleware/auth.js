@@ -9,6 +9,7 @@ const auth = async (req, res, next) => {
   }
   const token = rawToken.split(' ')[1]
   try {
+    
     const decodedToken = jwt.verify(token, CONSTS.JWT_SECRET)
 
     console.log('decodedToken->', decodedToken)
@@ -18,7 +19,7 @@ const auth = async (req, res, next) => {
     })
 
     console.log('authuser->', authUser)
-    
+
     if (!authUser) {
       return res.status(401).json({
         message: 'Token affiliated to user that does not exist anymore',

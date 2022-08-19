@@ -119,6 +119,20 @@ const login = async (req, res, next) => {
   }
 }
 
+const deleteProfile = async (req, res, next) => {
+  const { userId } = req.params
+  try {
+    const deletedProfile = await UserModel.findByIdAndDelete(userId)
+    if (!deletedProfile){
+      return res.status(404).json({ message: `${userId} doesn't exist` })
+    }
+    return res.status(200).json({
+      message: 'Your profile has been deleted',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
 
 
-export default ({ getAll, getSingle, register, login })
+export default ({ getAll, getSingle, register, login, deleteProfile })
