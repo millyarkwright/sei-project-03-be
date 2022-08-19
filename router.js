@@ -1,6 +1,7 @@
 import express from 'express'
 import moviesController from './controllers/moviesController.js'
 import userController from './controllers/userController.js'
+// import auth from './middleware/auth.js'
 
 const router = express.Router()
 
@@ -16,6 +17,7 @@ router.route('/movies/:movieId').get(moviesController.getSingle)
 // ! User Endpoints
 router.route('/users').get(userController.getAll)
 router.route('/users/:userId').get(userController.getSingle)
+router.route('/register').post(userController.register)
 
 
 export default router
