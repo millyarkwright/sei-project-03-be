@@ -78,21 +78,25 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { username, password } = req.body
 
+  console.log(` username & password (reqbody): ${username} - ${password}`)
+
   try {
     // ? Find user in db
-    const user = UserModel.findOne({ username })
+    const user = await UserModel.findOne({ username })
 
     // ? If user doesn't exist
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' })
+      return res.status(400).json({ message: 'Bad User' })
     }
 
     // ? Check passwords match
     const passwordsMatch = await bcrypt.compare(password, user.password)
-    
+    console.log('passwordsMatch->', passwordsMatch)
+
+
     // ? If passwords don't match
     if (!passwordsMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' })
+      return res.status(400).json({ message: 'Bad Password' })
     }
 
     // ? If all checks above are passed, generate token
@@ -106,10 +110,15 @@ const login = async (req, res, next) => {
       expiresIn: '7 days',
     }
 
+    const token = jwt.sign(payLoad, CONSTS.JWT_SECRET, opts)
+
+    return res.status(200).json({ token })
+
   } catch (error) {
     next(error)
   }
 }
+
 
 
 export default ({ getAll, getSingle, register, login })

@@ -17,9 +17,8 @@ router.route('/movies/:movieId').get(moviesController.getSingle)
 // ! User Endpoints
 router.route('/users').get(userController.getAll)
 router.route('/users/:userId').get(userController.getSingle)
-router.route('/register')
-  .post(userController.register)
-  .post(userController.login)
+router.route('/register').post(userController.register)
+router.route('/login').post(userController.login)
 
 
 export default router
