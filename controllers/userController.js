@@ -10,7 +10,7 @@ import UserModel from '../models/users.js'
 const getAll = async (req, res, next) => {
   try {
     const allUsers = await UserModel.find()
-    console.log('allusers->', allUsers)
+    // console.log('allusers->', allUsers)
     return res.status(200).json(allUsers)
   } catch (error) {
     console.log(error)
@@ -22,7 +22,7 @@ const getAll = async (req, res, next) => {
 
 const getSingle = async (req, res, next) => {
   const { userId } = req.params
-  console.log('userid', userId)
+  // console.log('userid', userId)
   try {
     const foundUser = await UserModel.findById(userId)
     if (!foundUser) {
@@ -55,7 +55,6 @@ const register = async (req, res, next) => {
 
   // ? Check passwords match
   if (newUser.password !== newUser.confirmedPassword) {
-    console.log('passing 1st if statement - passwords do not match')
     return res.status(400).json({ message: 'Password do not match' })
   } 
 

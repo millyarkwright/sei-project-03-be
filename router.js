@@ -1,6 +1,7 @@
 import express from 'express'
 import moviesController from './controllers/moviesController.js'
 import userController from './controllers/userController.js'
+import moviePreferenceController from './controllers/moviePreferenceController.js'
 import auth from './middleware/auth.js'
 
 const router = express.Router()
@@ -16,11 +17,16 @@ router.route('/movies/:movieId').get(moviesController.getSingle)
 
 // ! User Endpoints
 router.route('/users').get(userController.getAll)
-router.route('/users/:userId')
-  .get(userController.getSingle)
-  .delete(userController.deleteProfile)
 router.route('/register').post(userController.register)
 router.route('/login').post(userController.login)
+router.route('/profile/:userId')
+  .get(userController.getSingle)
+  .delete(userController.deleteProfile)
+// router.route('/profile/:userId').put(userController.updatedUserInfo)
+
+// ! Movie Preference Endpoints
+router.route('/movies/:userId/:movieId').put(moviePreferenceController.createPreference)
+
 
 
 export default router
