@@ -11,7 +11,7 @@ const router = express.Router()
 router.route('/').get((req, res) => res.status(200).send('Api is running'))
 
 // ! Movie Endpoints
-router.route('/movies').get(auth, moviesController.getAll)
+router.route('/movies').get(moviesController.getAll)
 router.route('/movies/:movieId').get(moviesController.getSingle)
 
 
