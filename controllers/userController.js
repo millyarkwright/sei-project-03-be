@@ -53,6 +53,20 @@ const register = async (req, res, next) => {
     return res.status(400).json({ message: 'Username already exists' })
   }
 
+  // ? Check password exists
+  
+  if (!newUser.username){
+    return res.status(400).json({ message: 'Username field cannot be empty' })
+  }
+
+  if (!newUser.email){
+    return res.status(400).json({ message: 'Email field cannot be empty' })
+  }
+
+  if (!newUser.password){
+    return res.status(400).json({ message: 'Password field cannot be empty' })
+  }
+
   // ? Check passwords match
   if (newUser.password !== newUser.confirmedPassword) {
     return res.status(400).json({ message: 'Password do not match' })

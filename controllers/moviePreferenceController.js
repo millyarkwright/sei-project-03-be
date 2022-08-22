@@ -16,7 +16,7 @@ const createPreference = async (req, res, next) => {
     const user = await UserModel.findById(userId)
 
    
-    user.moviePreferences.push(movieId)
+    user.moviePreferences.push(preferences)
 
     console.log('user updated->', user)
 
