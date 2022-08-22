@@ -1,6 +1,6 @@
 import express from 'express'
 import router from './router.js'
-// import cors from 'cors'
+import cors from 'cors'
 import logger from './middleware/logger.js'
 import errorHandler from './middleware/errorHandler.js'
 import MovieModel from './models/movies.js'
@@ -12,7 +12,7 @@ const PORT = 4000
 const app = express()
 
 // ! Allow requests from anywhere
-// app.use(cors())
+app.use(cors())
 
 // ! Convert request into valid JSON object
 app.use(express.json())
