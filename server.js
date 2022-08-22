@@ -6,7 +6,7 @@ import errorHandler from './middleware/errorHandler.js'
 import MovieModel from './models/movies.js'
 import connectToDb from './utils/db.js'
 
-const PORT = 4000
+const PORT = 4500
 
 // ! Define Express App
 const app = express()

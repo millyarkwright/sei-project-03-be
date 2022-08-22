@@ -85,7 +85,7 @@ const login = async (req, res, next) => {
 
     // ? If user doesn't exist
     if (!user) {
-      return res.status(400).json({ message: 'Bad User' })
+      return res.status(400).json({ message: 'Invalid user credentials' })
     }
 
     // ? Check passwords match
@@ -95,7 +95,7 @@ const login = async (req, res, next) => {
 
     // ? If passwords don't match
     if (!passwordsMatch) {
-      return res.status(400).json({ message: 'Bad Password' })
+      return res.status(400).json({ message: 'Invalid user credentials' })
     }
 
     // ? If all checks above are passed, generate token
