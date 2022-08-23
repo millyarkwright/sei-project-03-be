@@ -5,8 +5,7 @@ import logger from './middleware/logger.js'
 import errorHandler from './middleware/errorHandler.js'
 import MovieModel from './models/movies.js'
 import connectToDb from './utils/db.js'
-
-const PORT = 4500
+import CONSTS from './consts.js'
 
 // ! Define Express App
 const app = express()
@@ -34,8 +33,8 @@ const startServer = async () => {
   await connectToDb()
   console.log('Database has connected successfully')
 
-  app.listen(PORT, () => {
-    console.log('Express server running on port 4000')
+  app.listen(CONSTS.PORT, () => {
+    console.log(`Express server running on port ${CONSTS.PORT}`)
   })
 
 }
