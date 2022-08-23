@@ -13,19 +13,20 @@ router.route('/').get((req, res) => res.status(200).send('Api is running'))
 // ! Movie Endpoints
 router.route('/movies')
   .get(moviesController.getAll)
-  .put(auth, moviePreferenceController.updateMoviePreferences)
 router.route('/movies/:movieId').get(moviesController.getSingle)
 
 
 // ! User Endpoints
-router.route('/users').get(auth, userController.getAll)
+router.route('/users').get(userController.getAll)
 router.route('/register').post(userController.register)
 router.route('/login').post(userController.login)
-router.route('/profile/:userId')
+router.route('/profile')
   .get(auth, userController.getSingle)
   .delete(auth, userController.deleteProfile)
-router.route('/profile/preferences/:userId')
+router.route('/profile/preferences')
   .get(auth, moviePreferenceController.getAllPreferences)
+  .put(auth, moviePreferenceController.updateMoviePreferences)
+
 // router.route('/profile/:userId').put(userController.updatedUserInfo)
 
 // ! Movie Preference Endpoints

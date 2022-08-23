@@ -21,12 +21,13 @@ const getAll = async (req, res, next) => {
 // ! Get individual user
 
 const getSingle = async (req, res, next) => {
-  const { userId } = req.params
+  // const { userId } = req.params
+  const { id: currentUserId } = req.currentUser
   // console.log('userid', userId)
   try {
-    const foundUser = await UserModel.findById(userId)
+    const foundUser = await UserModel.findById(currentUserId)
     if (!foundUser) {
-      return res.status(404).json({ message: `User with ID ${userId} could not be found` })
+      return res.status(404).json({ message: `User with ID ${currentUserId} could not be found` })
     }
     return res.status(200).json(foundUser)
   } catch (error) {
@@ -133,11 +134,14 @@ const login = async (req, res, next) => {
 }
 
 const deleteProfile = async (req, res, next) => {
-  const { userId } = req.params
+  // const { userId } = req.params
+  const { id: currentUserId } = req.currentUser
+  
+
   try {
-    const deletedProfile = await UserModel.findByIdAndDelete(userId)
+    const deletedProfile = await UserModel.findByIdAndDelete(currentUserId)
     if (!deletedProfile){
-      return res.status(404).json({ message: `${userId} doesn't exist` })
+      return res.status(404).json({ message: `${currentUserId} doesn't exist` })
     }
     return res.status(200).json({
       message: 'Your profile has been deleted',
