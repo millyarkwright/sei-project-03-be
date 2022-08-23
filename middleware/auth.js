@@ -1,4 +1,4 @@
-import jwt from 'JsonWebToken'
+import jwt from 'jsonwebtoken'
 import CONSTS from '../consts.js'
 import UserModel from '../models/users.js'
 
