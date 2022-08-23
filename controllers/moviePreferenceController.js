@@ -1,5 +1,6 @@
 import MovieModel from '../models/movies.js'
 import UserModel from '../models/users.js'
+import mongoose from 'mongoose'
 
 // ! Create Preferences
 
@@ -46,9 +47,13 @@ const updateMoviePreferences = async (req, res, next) => {
 
   console.log('currentUserId->', currentUserId)
   // console.log('movieId->', movieId)
+  const likedId = mongoose.Types.ObjectId(preferences.moviesLiked)
+  const dislikedId = mongoose.Types.ObjectId(preferences.moviesDisliked)
+
+  const newPreferences = { ...preferences, moviesLikes: likedId, moviesDisliked: dislikedId }
 
   try {
-    const updatedUser = await UserModel.findByIdAndUpdate(currentUserId, preferences, { new: true })
+    const updatedUser = await UserModel.findByIdAndUpdate(currentUserId, newPreferences, { new: true })
 
     console.log('updateduser->', updatedUser)
 
