@@ -37,20 +37,20 @@ const updateDislikes = async (req, res, next) => {
   }
 }
 
-const getAllPreferences = async (req, res, next) => {
-  const { id: currentUserId } = req.currentUser
-  try {
-    const user = await UserModel.findById(currentUserId)
-    const { moviesLiked, moviesDisliked } = user
-    console.log('moviesliked->', moviesLiked)
-    return res.status(200).json({ moviesLiked: `${moviesLiked}`, moviesDisliked: `${moviesDisliked}` })
-  } catch (error) {
-    next(error)
-  }
-}
+// const getAllPreferences = async (req, res, next) => {
+//   const { id: currentUserId } = req.currentUser
+//   try {
+//     const user = await UserModel.findById(currentUserId)
+//     const { moviesLiked, moviesDisliked } = user
+//     console.log('moviesliked->', moviesLiked)
+//     return res.status(200).json({ moviesLiked: `${moviesLiked}`, moviesDisliked: `${moviesDisliked}` })
+//   } catch (error) {
+//     next(error)
+//   }
+// }
 
 export default {
   updateLikes,
   updateDislikes,
-  getAllPreferences,
+  // getAllPreferences,
 }

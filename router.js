@@ -22,13 +22,14 @@ router.route('/login').post(userController.login)
 router.route('/profile/:userId')
   .get(userController.getSingle)
   .delete(userController.deleteProfile)
-router.route('/profile/preferences/:userId')
-  .get(auth, moviePreferenceController.getAllPreferences)
+// router.route('/profile/preferences/:userId')
+//   .get(auth, moviePreferenceController.getAllPreferences)
 // router.route('/profile/:userId').put(userController.updatedUserInfo)
 
 // ! Movie Preference Endpoints
-router.route('/movies/:movieId')
+router.route('/profile/likes/:userId')
   .put(auth, moviePreferenceController.updateLikes)
+router.route('/profile/dislikes/:userId')
   .put(auth, moviePreferenceController.updateDislikes)
 
 
