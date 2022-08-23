@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
   // moviePreferences: [moviePreferenceSchema],
-  moviesLiked: [{ type: mongoose.Schema.ObjectId, ref: 'Movie' }],
-  moviesDisliked: [{ type: mongoose.Schema.ObjectId, ref: 'Movie' }],
+  moviesLiked: { type: Array },
+  moviesDisliked: { type: Array },
   createdAt: { type: Date, default: Date.now() },
 })
 
@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
 //   username: { type: String, required: true, unique: true }, 
 //   password: { type: String, required: true },
 //   role: { type: String, enum: ['admin', 'user'], default: 'user' },
-//   moviesLiked: { type: [mongoose.Schema.ObjectId], ref: 'Movies' },
-//   moviesDisliked: { type: [mongoose.Schema.ObjectId], ref: 'Movies' },
+//   moviesLiked: [{ type: [mongoose.Schema.ObjectId], ref: 'Movies' }],
+//   moviesDisliked: [{ type: [mongoose.Schema.ObjectId], ref: 'Movies' }],
 //   createdAt: { type: Date, default: Date.now() },
 // })
 

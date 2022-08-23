@@ -37,6 +37,28 @@ const updateDislikes = async (req, res, next) => {
   }
 }
 
+
+
+const updateMoviePreferences = async (req, res, next) => {
+  const { id: currentUserId } = req.currentUser
+  const { body: preferences } = req
+  console.log('mov pref req body->', preferences)
+
+  console.log('currentUserId->', currentUserId)
+  // console.log('movieId->', movieId)
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(currentUserId, preferences, { new: true })
+
+    console.log('updateduser->', updatedUser)
+
+    return res.status(200).json({ message: 'Preference successfully updated' })
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 const getAllPreferences = async (req, res, next) => {
   const { id: currentUserId } = req.currentUser
   try {
@@ -52,5 +74,6 @@ const getAllPreferences = async (req, res, next) => {
 export default {
   updateLikes,
   updateDislikes,
+  updateMoviePreferences,
   getAllPreferences,
 }
