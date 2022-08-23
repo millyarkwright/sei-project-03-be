@@ -9,7 +9,7 @@ const consts = {
   USER3_PASSWORD: process.env.USER3_PASSWORD,
 
   DB_CONNECTION_STRING: process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/movies',
-  
+  PORT: process.env.PORT || 4500,
   JWT_SECRET: process.env.JWT_SECRET || 'JWT_SECRET',
 
 }
