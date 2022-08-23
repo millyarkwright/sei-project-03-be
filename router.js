@@ -18,12 +18,12 @@ router.route('/movies/:movieId').get(moviesController.getSingle)
 
 
 // ! User Endpoints
-router.route('/users').get(userController.getAll)
+router.route('/users').get(auth, userController.getAll)
 router.route('/register').post(userController.register)
 router.route('/login').post(userController.login)
 router.route('/profile/:userId')
-  .get(userController.getSingle)
-  .delete(userController.deleteProfile)
+  .get(auth, userController.getSingle)
+  .delete(auth, userController.deleteProfile)
 router.route('/profile/preferences/:userId')
   .get(auth, moviePreferenceController.getAllPreferences)
 // router.route('/profile/:userId').put(userController.updatedUserInfo)
