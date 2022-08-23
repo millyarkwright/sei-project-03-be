@@ -11,7 +11,7 @@ const router = express.Router()
 router.route('/').get((req, res) => res.status(200).send('Api is running'))
 
 // ! Movie Endpoints
-router.route('/movies').get(auth, moviesController.getAll)
+router.route('/movies').get(moviesController.getAll)
 router.route('/movies/:movieId').get(moviesController.getSingle)
 
 
@@ -22,10 +22,14 @@ router.route('/login').post(userController.login)
 router.route('/profile/:userId')
   .get(userController.getSingle)
   .delete(userController.deleteProfile)
+router.route('/profile/preferences/:userId')
+  .get(auth, moviePreferenceController.getAllPreferences)
 // router.route('/profile/:userId').put(userController.updatedUserInfo)
 
 // ! Movie Preference Endpoints
-router.route('/movies/:userId/:movieId').put(moviePreferenceController.createPreference)
+router.route('/movies/:movieId')
+  .put(auth, moviePreferenceController.updateLikes)
+  .put(auth, moviePreferenceController.updateDislikes)
 
 
 

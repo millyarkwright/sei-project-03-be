@@ -3,35 +3,66 @@ import UserModel from '../models/users.js'
 
 // ! Create Preferences
 
-const createPreference = async (req, res, next) => {
-  const { userId, movieId } = req.params
-  const { body: preferences } = req
+const updateLikes = async (req, res, next) => {
+  const { movieId } = req.params
+  const { id: currentUserId } = req.currentUser
 
-  console.log('user->', userId)
-  console.log('movieId->', movieId)
-  console.log('preferences->', preferences)
+  console.log('currentUserId->', currentUserId)
+  // console.log('movieId->', movieId)
 
   try {
-    const movie = await MovieModel.findById(movieId)
-    const user = await UserModel.findById(userId)
-
-   
-    user.moviePreferences.push(preferences)
-
-    console.log('user updated->', user)
-
+    const user = await UserModel.findById(currentUserId)
+    user.moviesLiked.push(movieId)
     await user.save()
-
-    return res.status(200).json({ message: 'Preference successfully created', moviePreferences: preferences })
-
+    return res.status(200).json({ message: 'Preference successfully updated' })
   } catch (error) {
     next(error)
   }
-  // use Map function for update
 }
 
+const updateDislikes = async (req, res, next) => {
+  const { movieId } = req.params
+  const { id: currentUserId } = req.currentUser
 
+  console.log('currentUserId->', currentUserId)
+  // console.log('movieId->', movieId)
+
+  try {
+    const user = await UserModel.findById(currentUserId)
+    user.moviesDisliked.push(movieId)
+    await user.save()
+    return res.status(200).json({ message: 'Preference successfully updated' })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getAllPreferences = async (req, res, next) => {
+  const { id: currentUserId } = req.currentUser
+  try {
+    const user = await UserModel.findById(currentUserId)
+    const { moviesLiked, moviesDisliked } = user
+    console.log('moviesliked->', moviesLiked)
+    return res.status(200).json({ moviesLiked: `${moviesLiked}`, moviesDisliked: `${moviesDisliked}` })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getAllPreferences = async (req, res, next) => {
+  const { id: currentUserId } = req.currentUser
+  try {
+    const user = await UserModel.findById(currentUserId)
+    const { moviesLiked, moviesDisliked } = user
+    console.log('moviesliked->', moviesLiked)
+    return res.status(200).json({ moviesLiked: `${moviesLiked}`, moviesDisliked: `${moviesDisliked}` })
+  } catch (error) {
+    next(error)
+  }
+}
 
 export default {
-  createPreference,
+  updateLikes,
+  updateDislikes,
+  getAllPreferences,
 }
