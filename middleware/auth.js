@@ -18,6 +18,8 @@ const auth = async (req, res, next) => {
       username: decodedToken.username,
     })
 
+    // Add functionality for admin permission delete
+
     console.log('authuser->', authUser)
 
     if (!authUser) {
