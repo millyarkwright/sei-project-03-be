@@ -42,41 +42,8 @@ const updateDislikes = async (req, res, next) => {
   }
 }
 
-
-
-const updateMoviePreferences = async (req, res, next) => {
-  const { id: currentUserId } = req.currentUser
-  const { body: preferences } = req
-  console.log('mov pref req body->', preferences)
-  console.log('currentUserId->', currentUserId)
-  // console.log('movieId->', movieId)
-
-  // const likedId = mongoose.Types.ObjectId(preferences.moviesLiked)
-  // const dislikedId = mongoose.Types.ObjectId(preferences.moviesDisliked)
-
-  // const newPreferences = { ...preferences, moviesLikes: likedId, moviesDisliked: dislikedId }
-
-  const user = await UserModel.findById(currentUserId)
-
-  user.likedMovies = [...user.likedMovies, ...preferences.moviesLiked]
-  // user.likedMovies = [user.likedMovies.push(preferences.moviesLiked)]
-  user.dislikeMovies = [...user.dislikedMovies, ...preferences.moviesDisliked]
-
-  await user.save()
-
-  try {
-    const updatedUser = await UserModel.findByIdAndUpdate(currentUserId, preferences, { new: true })
-
-    console.log('updateduser->', updatedUser)
-
-    return res.status(200).json({ message: 'Preference successfully updated' })
-  } catch (error) {
-    next(error)
-  }
-}
-
-
-const getAllPreferences = async (req, res, next) => {
+// ! Get Single User Preferences
+const getUserPreferences = async (req, res, next) => {
   const { id: currentUserId } = req.currentUser
   try {
     const user = await UserModel.findById(currentUserId)
@@ -88,9 +55,21 @@ const getAllPreferences = async (req, res, next) => {
   }
 }
 
+// ! Get all users preferences
+
+const getAllUserPreferences = async (req, res, next) => {
+  try {
+    const allUsers = await UserModel.find().select('username moviesLiked')
+    return res.status(200).json(allUsers)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 export default {
   updateLikes,
   updateDislikes,
-  updateMoviePreferences,
-  getAllPreferences,
+  getUserPreferences,
+  getAllUserPreferences,
 }
