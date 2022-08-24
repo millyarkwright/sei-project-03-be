@@ -23,16 +23,18 @@ router.route('/login').post(userController.login)
 router.route('/profile')
   .get(auth, userController.getSingle)
   .delete(auth, userController.deleteProfile)
-router.route('/profile/preferences')
-  .get(auth, moviePreferenceController.getAllPreferences)
-  .put(auth, moviePreferenceController.updateMoviePreferences)
+
+// .put(auth, moviePreferenceController.updateMoviePreferences)
 
 // router.route('/profile/:userId').put(userController.updatedUserInfo)
 
 // ! Movie Preference Endpoints
-router.route('/movies/:movieId')
+router.route('/preferences/likes/:movieId')
   .put(auth, moviePreferenceController.updateLikes)
+router.route('/preferences/dislikes/:movieId')
   .put(auth, moviePreferenceController.updateDislikes)
+router.route('/preferences')
+  .get(auth, moviePreferenceController.getAllPreferences)
 
 
 
