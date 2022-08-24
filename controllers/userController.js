@@ -151,5 +151,10 @@ const deleteProfile = async (req, res, next) => {
   }
 }
 
+const updateProfile = async (req, res, next) => {
+  const { id: currentUserId } = req.currentUser
 
-export default ({ getAll, getSingle, register, login, deleteProfile })
+}
+
+
+export default ({ getAll, getSingle, register, login, deleteProfile, updateProfile })
