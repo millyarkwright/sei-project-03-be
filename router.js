@@ -34,7 +34,9 @@ router.route('/preferences/likes/:movieId')
 router.route('/preferences/dislikes/:movieId')
   .put(auth, moviePreferenceController.updateDislikes)
 router.route('/preferences')
-  .get(auth, moviePreferenceController.getAllPreferences)
+  .get(auth, moviePreferenceController.getUserPreferences)
+router.route('/preferences/all')
+  .get(moviePreferenceController.getAllUserPreferences)
 
 
 
