@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true }, 
   password: { type: String, required: true },
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
-  moviesLiked: [{ type: [mongoose.Schema.ObjectId], ref: 'Movies' }],
-  moviesDisliked: [{ type: [mongoose.Schema.ObjectId], ref: 'Movies' }],
+  moviesLiked: { type: [mongoose.Schema.ObjectId], ref: 'Movies', default: [] },
+  moviesDisliked: { type: [mongoose.Schema.ObjectId], ref: 'Movies', default: [] },
   createdAt: { type: Date, default: Date.now() },
 })
 
