@@ -133,6 +133,63 @@ const login = async (req, res, next) => {
   }
 }
 
+const updateProfile = async (req, res, next) => {
+  const { currentUser } = req
+  const { id: currentUserId } = req.currentUser
+  const { body: profileUpdates } = req
+
+  console.log('current user->',currentUser)
+
+  try { 
+    const userToUpdate = await UserModel.findById(currentUserId)
+    console.log('user to update->',userToUpdate)
+
+    if (!userToUpdate) {
+      return res.status(404).json({ message: `User ${currentUserId} could not be found` })  
+    }
+
+    if (userToUpdate.username !== currentUser.username && currentUser.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden. You do not have the permissions to update this user' })
+    }
+
+
+    // ? Check passwords match
+    const passwordsMatch = await bcrypt.compare(profileUpdates.password, userToUpdate.password)
+    console.log('passwordsMatch->', passwordsMatch)
+
+    // ? If passwords don't match
+    if (!passwordsMatch) {
+      return res.status(404).json({ message: 'Current passwords do not match' })
+    }
+
+    // ? If all checks above passed
+    // ? Check new passwords match
+    if (profileUpdates.newPassword !== profileUpdates.newConfirmPassword) {
+      return res.status(400).json({ message: 'New passwords do not match' })
+    } 
+
+    // ? Encrypt Password
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(profileUpdates.newPassword, salt)
+
+    const updatedPassword = { password: hashedPassword }
+
+    console.log('updatedpassword', updatedPassword)
+
+    const updatedDocument = await UserModel.findByIdAndUpdate(currentUserId, updatedPassword, { new: true } )
+
+    console.log('updatedDoc', updatedDocument)
+
+
+    return res.status(200).json({ message: 'Password has been successfully updated!' })
+
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 const deleteProfile = async (req, res, next) => {
   // const { userId } = req.params
   const { id: currentUserId } = req.currentUser
@@ -152,4 +209,4 @@ const deleteProfile = async (req, res, next) => {
 }
 
 
-export default ({ getAll, getSingle, register, login, deleteProfile })
+export default ({ getAll, getSingle, register, login, updateProfile, deleteProfile })
