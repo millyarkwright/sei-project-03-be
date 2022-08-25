@@ -22,6 +22,7 @@ router.route('/register').post(userController.register)
 router.route('/login').post(userController.login)
 router.route('/profile')
   .get(auth, userController.getSingle)
+  .put(auth, userController.updateProfile)
   .delete(auth, userController.deleteProfile)
 
 // .put(auth, moviePreferenceController.updateMoviePreferences)
