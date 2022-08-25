@@ -91,10 +91,24 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { username, password } = req.body
+  // console.log('reqbodyusername', req.body.username === '')
+  // console.log(` username & password (reqbody): ${username} - ${password}`)
 
-  console.log(` username & password (reqbody): ${username} - ${password}`)
+  // if (req.body.username === ''){
+  //   return res.status(400).json({ message: 'Username field cannot be empty' })
+  // }
+
+  // console.log(typeof req.body.username)
+
+  // typeof req.body.username !== String && res.status(400).json({ message: 'Username field cannot be empty' })
+
 
   try {
+    
+    if (req.body.username === ''){
+      return res.status(400).json({ message: 'Username field cannot be empty' })
+    }
+
     // ? Find user in db
     const user = await UserModel.findOne({ username })
 
@@ -129,6 +143,7 @@ const login = async (req, res, next) => {
     return res.status(200).json({ token })
 
   } catch (error) {
+    console.log('registererror', error)
     next(error)
   }
 }
