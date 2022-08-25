@@ -176,7 +176,7 @@ const movies = [
       'Natalie Portman',
       'Rupert Graves'
     ],
-    'desc': 'In a future British dystopian society, a shadowy freedom fighter, known only by the alias of \u0026quot;V\u0026quot;, plots to overthrow the tyrannical government - with the help of a young woman.',
+    'desc': 'In a future British dystopian society, a shadowy freedom fighter, known only by the alias of alias of "V";, plots to overthrow the tyrannical government - with the help of a young woman.',
     'directors': [
       'James McTeigue'
     ],
