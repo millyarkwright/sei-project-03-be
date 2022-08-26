@@ -18,10 +18,6 @@ const auth = async (req, res, next) => {
       username: decodedToken.username,
     })
 
-    // Add functionality for admin permission delete
-
-    console.log('authuser->', authUser)
-
     if (!authUser) {
       return res.status(401).json({
         message: 'Token affiliated to user that does not exist anymore',

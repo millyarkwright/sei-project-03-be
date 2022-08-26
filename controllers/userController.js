@@ -3,8 +3,6 @@ import jwt from 'jsonwebtoken'
 import CONSTS from '../consts.js'
 import UserModel from '../models/users.js'
 
-
-
 // ! Get all users 
 
 const getAll = async (req, res, next) => {
@@ -39,12 +37,10 @@ const getSingle = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   const { body: newUser } = req
-  // console.log('register request->', newUser )
 
   // ? Check if credentials already exist
 
   const emailExists = await UserModel.findOne({ email: newUser.email })
-  // console.log('email exists', emailExists)
   if (emailExists) {
     return res.status(400).json({ message: 'Email address already exists' })
   }
@@ -91,18 +87,6 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { username, password } = req.body
-  // console.log('reqbodyusername', req.body.username === '')
-  // console.log(` username & password (reqbody): ${username} - ${password}`)
-
-  // if (req.body.username === ''){
-  //   return res.status(400).json({ message: 'Username field cannot be empty' })
-  // }
-
-  // console.log(typeof req.body.username)
-
-  // typeof req.body.username !== String && res.status(400).json({ message: 'Username field cannot be empty' })
-
-
   try {
     
     if (req.body.username === ''){
@@ -119,8 +103,6 @@ const login = async (req, res, next) => {
 
     // ? Check passwords match
     const passwordsMatch = await bcrypt.compare(password, user.password)
-    console.log('passwordsMatch->', passwordsMatch)
-
 
     // ? If passwords don't match
     if (!passwordsMatch) {
@@ -143,7 +125,6 @@ const login = async (req, res, next) => {
     return res.status(200).json({ token })
 
   } catch (error) {
-    console.log('registererror', error)
     next(error)
   }
 }
@@ -152,8 +133,6 @@ const updateProfile = async (req, res, next) => {
   const { currentUser } = req
   const { id: currentUserId } = req.currentUser
   const { body: profileUpdates } = req
-
-  console.log('current user->',currentUser)
 
   try { 
     const userToUpdate = await UserModel.findById(currentUserId)
@@ -167,17 +146,14 @@ const updateProfile = async (req, res, next) => {
       return res.status(403).json({ message: 'Forbidden. You do not have the permissions to update this user' })
     }
 
-
     // ? Check passwords match
     const passwordsMatch = await bcrypt.compare(profileUpdates.password, userToUpdate.password)
-    console.log('passwordsMatch->', passwordsMatch)
 
     // ? If passwords don't match
     if (!passwordsMatch) {
       return res.status(404).json({ message: 'Current passwords do not match' })
     }
 
-    // ? If all checks above passed
     // ? Check new passwords match
     if (profileUpdates.newPassword !== profileUpdates.newConfirmPassword) {
       return res.status(400).json({ message: 'New passwords do not match' })
@@ -189,15 +165,9 @@ const updateProfile = async (req, res, next) => {
 
     const updatedPassword = { password: hashedPassword }
 
-    console.log('updatedpassword', updatedPassword)
-
     const updatedDocument = await UserModel.findByIdAndUpdate(currentUserId, updatedPassword, { new: true } )
 
-    console.log('updatedDoc', updatedDocument)
-
-
     return res.status(200).json({ message: 'Password has been successfully updated!' })
-
 
   } catch (error) {
     next(error)
@@ -209,7 +179,6 @@ const deleteProfile = async (req, res, next) => {
   // const { userId } = req.params
   const { id: currentUserId } = req.currentUser
   
-
   try {
     const deletedProfile = await UserModel.findByIdAndDelete(currentUserId)
     if (!deletedProfile){

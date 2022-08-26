@@ -1,6 +1,4 @@
-import MovieModel from '../models/movies.js'
 import UserModel from '../models/users.js'
-import mongoose from 'mongoose'
 
 // ! Create Preferences
 
@@ -9,11 +7,9 @@ const updateLikes = async (req, res, next) => {
   const { id: currentUserId } = req.currentUser
 
   console.log('currentUserId->', currentUserId)
-  // console.log('movieId->', movieId)
 
   try {
     const user = await UserModel.findById(currentUserId)
-    // user.moviesLiked = [...user.moviesLiked, movieId]
     user.moviesLiked.push(movieId)
     await user.save()
     return res.status(200).json({ message: 'Preference successfully updated' })
@@ -26,14 +22,8 @@ const updateDislikes = async (req, res, next) => {
   const { movieId } = req.params
   const { id: currentUserId } = req.currentUser
 
-  console.log('movieID', typeof movieId)
-  console.log('currentUserId->', currentUserId)
-
-  // console.log('movieId->', movieId)
-
   try {
     const user = await UserModel.findById(currentUserId)
-    // user.moviesDisliked = [...user.moviesDisliked, movieId]
     user.moviesDisliked.push(movieId)
     await user.save()
     return res.status(200).json({ message: 'Preference successfully updated' })
@@ -48,7 +38,6 @@ const getUserPreferences = async (req, res, next) => {
   try {
     const user = await UserModel.findById(currentUserId)
     const { moviesLiked, moviesDisliked } = user
-    console.log('moviesliked->', moviesLiked)
     return res.status(200).json({ moviesLiked: `${moviesLiked}`, moviesDisliked: `${moviesDisliked}` })
   } catch (error) {
     next(error)
@@ -56,7 +45,6 @@ const getUserPreferences = async (req, res, next) => {
 }
 
 // ! Get all users preferences
-
 const getAllUserPreferences = async (req, res, next) => {
   try {
     const allUsers = await UserModel.find().select('username moviesLiked')

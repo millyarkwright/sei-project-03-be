@@ -7,7 +7,6 @@ const getAll = async (req, res, next) => {
     const allMovies = await MovieModel.find()
     return res.status(200).json(allMovies)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
@@ -16,7 +15,6 @@ const getAll = async (req, res, next) => {
 
 const getSingle = async (req, res, next) => { 
   const { movieId } = req.params
-  // console.log('userid', movieId)
 
   try {
     const foundMovie = await MovieModel.findById(movieId)
