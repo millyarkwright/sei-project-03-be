@@ -19,9 +19,7 @@ const getAll = async (req, res, next) => {
 // ! Get individual user
 
 const getSingle = async (req, res, next) => {
-  // const { userId } = req.params
   const { id: currentUserId } = req.currentUser
-  // console.log('userid', userId)
   try {
     const foundUser = await UserModel.findById(currentUserId)
     if (!foundUser) {
