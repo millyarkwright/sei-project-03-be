@@ -106,12 +106,12 @@ We then proceeded to wireframe on Excalidraw; we included some features that we 
 
 **Trello**
 
-![Trello](../frontend/screenshots/trello.png)
+![Trello](./screenshots/trello.png)
 
 
 **Excalidraw**
 
-![Excalidraw](../frontend/screenshots/excalidraw.png)
+![Excalidraw](./screenshots/excalidraw.png)
 
 ### Key features
 
@@ -129,13 +129,13 @@ We found a list of the top 250 movies on GitHub which were in JSON format and we
 
 In our backend, our User controller meant we pulled the data from the user currently logged in, and provided an error message, if the current user could not be found. Whilst, we had a feature on our front end to prevent this page being accessible unless our user was logged in, we included this error handler in case we had further updates. 
 
-![MovieSwipe Get Single User](../frontend/screenshots/movieswipe_getsingle.png)
+![MovieSwipe Get Single User](./screenshots/movieswipe_getsingle.png)
 
 In the frontend, once we had already fetched the user data, we fetched all the movies from our database and then filtered the data using the filter array method. We created two new variables called ‘movieAlreadyLiked’ and ‘movieAlreadyDisliked’ which checked if the ID of the movie from the pulled movies matched any values in the users’ ‘moviesLiked’/ ‘moviesDisliked’ object. If there were no matches it was given a falsey value and the value was only returned if neither ‘movieAlreadyLiked’ or ‘movieAlreadyDisliked’ were truthy. 
 
 We then set the ‘allMovies’ state to ‘filteredData’. This meant the user was presented with an array of films they had not yet been shown and could pick up where they left off each time they logged in. 
 
-![MovieSwipe Get All Movie Data & Ids](../frontend/screenshots/movieswipe_moviedata.png)
+![MovieSwipe Get All Movie Data & Ids](./screenshots/movieSwipe_moviedata.png)
 
 As this was our first time working with a MERN full stack app, and as we had only been taught it a week previous, it was perhaps inevitable that our code would have a few mistakes. In writing this readMe, we have noticed that the map function used in movieAlreadyLiked and Disliked is redundant. This has subsequently been commented out and rewritten without the map function. 
 
@@ -145,13 +145,13 @@ With allMovies set as our filtered movies array, we know that unless our user ha
 
 Once the user has selected like or dislike, our count (which starts at 0) is updated by 1 and the movie at index 1 (allMovies[1]) will be shown. 
 
-![Handle Button Click & Update Database](../frontend/screenshots/movieswipe_handleClick.png)
+![Handle Button Click & Update Database](./screenshots/movieSwipe_handleClick.png)
 
 Our backend works by pushing the movieId to our moviesLiked or moviesDisliked field in our User Model:
 
-![User Model](../frontend/screenshots/usermodel.png)
+![User Model](./screenshots/usermodel.png)
 
-![User Controller](../frontend/screenshots/user_controller.png)
+![User Controller](./screenshots/user_controller.png)
 
 **MovieMatch**
 
@@ -159,7 +159,7 @@ Once the user enters the username of the person they’re watching with and clic
 
 Using Math.floor & Math.random, a random movieId in the filteredMovies array is then generated and the user taken to that movie’s detail page. If no common movies are found, then an error message will be displayed: “Sadly, you have no films in common…”.
 
-![Movie Match HandleSubmit](../frontend/screenshots/movieMatch_handleSubmit.png)
+![Movie Match HandleSubmit](./screenshots/movieMatch_handleSubmit.png)
 
 Originally we wanted the user to be able to select multiple users to watch with but we were slightly running out of time so focussed on getting the movieMatch function to work with one user. Additionally, we wanted the user to be able to flick through all the movies they have in common, however, we agreed to stick to generating one random movie and add this feature to our stretch goals/future improvements.
 
@@ -169,7 +169,7 @@ Originally we wanted the user to be able to select multiple users to watch with 
 
 We wanted the user to be redirected to the login page if they tried to access a page that requires the user to be logged in to access. If a 401 (UnAuthorised) error was returned when the get request for user data was made, we pulled in the “NeedToLogIn” component which contained a useEffect that would navigate the user to the login page after the page the user had tried to access had loaded.
 
-![Redirect](../frontend/screenshots/redirect.png)
+![Redirect](./screenshots/redirect.png)
 
 **Change Password**
 
@@ -177,9 +177,9 @@ We added a small feature that allowed users to change their password from their 
 
 This was relatively quick to implement as it used some of the same logic and code as the register feature. 
 
-![Change Password - Handlers](../frontend/screenshots/changePassword_handlers.png)
+![Change Password - Handlers](./screenshots/changePassword_handlers.png)
 
-![Change Password - Form](../frontend/screenshots/changePassword_form.png)
+![Change Password - Form](./screenshots/changePassword_form.png)
 
 *Backend*
 
@@ -191,26 +191,26 @@ There were a few of checks that needed to be made before updating the password:
 5. If this passes, the new password is encrypted using salt and bcrypt. 
 6. The new encrypted password is then saved to the database. 
 
-![Change Password - Backend](../frontend/screenshots/changePassword_backend.png)
+![Change Password - Backend](./screenshots/changePassword_backend.png)
 
 ## Final Project (screenshot walkthrough)
 
 **MovieSwipe**
-![MovieSwipe](../frontend/screenshots/watchit_swipe.jpeg)
+![MovieSwipe](./screenshots/watchit_swipe.jpeg)
 
 **Movie Detail Page**
-![Movie Detail Page](../frontend/screenshots/watchit_movie.jpeg)
+![Movie Detail Page](./screenshots/watchit_movie.jpeg)
 
 **Match With**
-![Match With](../frontend/screenshots/watchit_matchwith.jpeg)
+![Match With](./screenshots/watchit_matchwith.jpeg)
 
 → Once submitted, the user will then be taken to the movie detail page (see below).
 
 **Matched Movie**
-![Matched Movie](../frontend/screenshots/watchit_moviematch.jpeg)
+![Matched Movie](./screenshots/watchit_moviematch.jpeg)
 
 **Profile Page**
-![Profile Page](../frontend/screenshots/watchit_profile.png)
+![Profile Page](./screenshots/watchit_profile.png)
 
 ## Wins & Challenges
 
